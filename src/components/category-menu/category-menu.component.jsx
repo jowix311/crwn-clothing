@@ -1,5 +1,5 @@
 import "./category-menu.styles.scss";
-import CategoryItem from "../category-item/category-item.component";
+import CategoryItem from "../directory-item/directory-item.component";
 const CategoryMenu = ({ categories }) => {
   return (
     <div className="categories-menu">
