@@ -19,7 +19,7 @@ export const UserProvider = ({ children }) => {
         createUserDocumentFromAuth(user);
       }
       setCurrentUser(user); //null when user signed out
-      console.log(user);
+      // console.log(user); //keeping this a reference
     });
 
     return unsubscribe; // unsubscribe when unmount
