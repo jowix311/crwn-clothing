@@ -7,6 +7,8 @@ import { BrowserRouter } from "react-router-dom";
 import { UserProvider } from "./context/user.context";
 import { CategoriesProvider } from "./context/categories.context";
 import { CartProvider } from "./context/cart-context";
+import isPropValid from "@emotion/is-prop-valid";
+import { StyleSheetManager } from "styled-components";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -15,7 +17,9 @@ root.render(
       <UserProvider>
         <CategoriesProvider>
           <CartProvider>
-            <App />
+            <StyleSheetManager shouldForwardProp={isPropValid}>
+              <App />
+            </StyleSheetManager>
           </CartProvider>
         </CategoriesProvider>
       </UserProvider>
