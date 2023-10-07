@@ -1,4 +1,5 @@
 import { createContext, useEffect, useReducer, useState } from "react";
+import { createAction } from "../utils/reducer/reducer.utils";
 
 export const CART_ACTION_TYPES = {
   ADD_CART_ITEM: "ADD_CART_ITEM",
@@ -110,21 +111,17 @@ export const CartProvider = ({ children }) => {
       0
     );
 
-    dispatch({
-      type: CART_ACTION_TYPES.UPDATE_CART_ITEM,
-      payload: {
+    dispatch(
+      createAction(CART_ACTION_TYPES.UPDATE_CART_ITEM, {
         cartItems: newCartItems,
         cartItemsCount: newCartCount,
         cartTotal: newCartTotal,
-      },
-    });
+      })
+    );
   };
 
   const setIsCartOpen = (toggleFlag) => {
-    dispatch({
-      type: CART_ACTION_TYPES.TOGGLE_CART_DROPDOWN,
-      payload: toggleFlag,
-    });
+    dispatch(createAction(CART_ACTION_TYPES.TOGGLE_CART_DROPDOWN, toggleFlag));
   };
 
   const value = {
