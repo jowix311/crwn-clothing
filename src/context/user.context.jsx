@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useReducer } from "react";
 import {
   createUserDocumentFromAuth,
   onAuthStateChangeListener,
@@ -9,8 +9,33 @@ export const UserContext = createContext({
   setCurrentUser: () => null,
 });
 
+export const USER_ACTIONS_TYPES = {
+  SET_CURRENT_USER: "SET_CURRENT_USER",
+};
+
+const userReducer = (state, action) => {
+  const { type, payload } = action;
+
+  switch (type) {
+    case "SET_CURRENT_USER":
+      return {
+        currentUser: payload,
+      };
+    default:
+      throw new Error(`Unhandled action ${type} in userReducer`);
+  }
+};
+
+const INITIAL_STATE = {
+  currentUser: null,
+};
+
 export const UserProvider = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState(null);
+  const [state, dispatch] = useReducer(userReducer, INITIAL_STATE);
+  const { currentUser } = state;
+  const setCurrentUser = (user) => {
+    dispatch({ type: USER_ACTIONS_TYPES.SET_CURRENT_USER, payload: user });
+  };
   const value = { currentUser, setCurrentUser };
 
   useEffect(() => {
@@ -19,7 +44,6 @@ export const UserProvider = ({ children }) => {
         createUserDocumentFromAuth(user);
       }
       setCurrentUser(user); //null when user signed out
-      // console.log(user); //keeping this a reference
     });
 
     return unsubscribe; // unsubscribe when unmount
