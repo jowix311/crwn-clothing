@@ -5,8 +5,7 @@ import {
   CategoryTitle,
   Preview,
 } from "./category-preview.styles";
-import { useSelector } from "react-redux";
-import { selectCategoriesMap } from "../../store/categories/category.selector";
+
 const CategoryPreview = ({ title, products }) => {
   return (
     <CategoryPreviewContainer>
