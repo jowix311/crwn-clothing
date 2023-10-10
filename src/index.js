@@ -4,8 +4,6 @@ import "./index.scss";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
-
-import { CategoriesProvider } from "./context/categories.context";
 import { CartProvider } from "./context/cart-context";
 import isPropValid from "@emotion/is-prop-valid";
 import { StyleSheetManager } from "styled-components";
@@ -17,13 +15,11 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>
-        <CategoriesProvider>
-          <CartProvider>
-            <StyleSheetManager shouldForwardProp={isPropValid}>
-              <App />
-            </StyleSheetManager>
-          </CartProvider>
-        </CategoriesProvider>
+        <CartProvider>
+          <StyleSheetManager shouldForwardProp={isPropValid}>
+            <App />
+          </StyleSheetManager>
+        </CartProvider>
       </BrowserRouter>
     </Provider>
   </React.StrictMode>
