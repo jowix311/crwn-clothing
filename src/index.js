@@ -4,7 +4,6 @@ import "./index.scss";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
-import { CartProvider } from "./context/cart-context";
 import isPropValid from "@emotion/is-prop-valid";
 import { StyleSheetManager } from "styled-components";
 import { Provider } from "react-redux";
@@ -15,11 +14,9 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>
-        <CartProvider>
-          <StyleSheetManager shouldForwardProp={isPropValid}>
-            <App />
-          </StyleSheetManager>
-        </CartProvider>
+        <StyleSheetManager shouldForwardProp={isPropValid}>
+          <App />
+        </StyleSheetManager>
       </BrowserRouter>
     </Provider>
   </React.StrictMode>
