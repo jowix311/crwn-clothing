@@ -5,8 +5,10 @@ import { persistStore, persistReducer } from "redux-persist";
 //root reducer
 
 import logger from "redux-logger";
-import thunk from "redux-thunk"; //keeping code for reference
+// import thunk from "redux-thunk"; //keeping code for reference
 // const middleWares = [logger]; //keeping code for reference
+import createSagaMiddleware from "redux-saga";
+import { rootSaga } from "./root-saga";
 
 const persistConfig = {
   key: "root",
@@ -15,11 +17,13 @@ const persistConfig = {
   whitelist: ["cart"],
 };
 
+const sagaMiddleware = createSagaMiddleware();
+
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const middleWares = [
   process.env.NODE_ENV !== "production" && logger,
-  thunk,
+  sagaMiddleware,
 ].filter(Boolean); //filtering Boolean is new to me!
 
 const composeEnhancer =
@@ -35,5 +39,7 @@ export const store = createStore(
   undefined,
   composedEnhancers
 );
+
+sagaMiddleware.run(rootSaga);
 
 export const persistor = persistStore(store);
