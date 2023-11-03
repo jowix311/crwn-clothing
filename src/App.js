@@ -5,18 +5,20 @@ import Authentication from "./routes/authentication/authentication.component";
 import Shop from "./routes/shop/shop.component";
 import Checkout from "./routes/checkout/checkout.component";
 import { useEffect } from "react";
-import {
-  createUserDocumentFromAuth,
-  getCurrentUser,
-  onAuthStateChangeListener,
-} from "./utils/firebase/firebase.utils";
-import { setCurrentUser } from "./store/user/user.action";
 import { useDispatch } from "react-redux";
+import { checkUserSession } from "./store/user/user.action";
+
+//@note keeping code below for reference (since we migrated to used promises to make use of Sagas)
+// import {
+//   createUserDocumentFromAuth,
+//   getCurrentUser,
+//   onAuthStateChangeListener,
+// } from "./utils/firebase/firebase.utils";
+// import { setCurrentUser } from "./store/user/user.action";
 
 const App = () => {
   const dispatch = useDispatch();
 
-  //keeping code below for reference (since we migrated to used promises to make use of Sagas)
   // useEffect(() => {
   //   const unsubscribe = onAuthStateChangeListener((user) => {
   //     if (user) {
@@ -29,7 +31,8 @@ const App = () => {
   // }, [dispatch]); //adding dispatch as dependency to remove react warning (although dispatch does not change)
 
   useEffect(() => {
-    getCurrentUser().then((user) => console.log(user));
+    // getCurrentUser().then((user) => console.log(user)); //keeping as reference
+    dispatch(checkUserSession());
   }, [dispatch]);
   return (
     <Routes>
