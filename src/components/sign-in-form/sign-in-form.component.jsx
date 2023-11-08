@@ -4,16 +4,21 @@ import "./sign-in-form.styles";
 import {
   // createUserDocumentFromAuth,
   signInUserWithEmailAndPassword,
-  signInWithGooglePopup,
 } from "../../utils/firebase/firebase.utils";
 import { useState } from "react";
 import { ButtonContainer, SignInContainer } from "./sign-in-form.styles";
+import { useDispatch } from "react-redux";
+import {
+  emailSignInStart,
+  googleSignInStart,
+} from "../../store/user/user.action";
 
 const defaultFormFields = {
   email: "",
   password: "",
 };
 const SignInForm = () => {
+  const dispatch = useDispatch();
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { email, password } = formFields;
 
@@ -30,7 +35,8 @@ const SignInForm = () => {
 
     try {
       resetFromFields();
-      const { user } = await signInUserWithEmailAndPassword(email, password);
+      // const { user } = await signInUserWithEmailAndPassword(email, password); //keeping this as non-saga approach reference
+      dispatch(emailSignInStart(email, password));
     } catch (error) {
       switch (error.code) {
         case "auth/wrong-password":
@@ -45,8 +51,12 @@ const SignInForm = () => {
     }
   };
 
-  const logGoogleUser = async () => {
-    await signInWithGooglePopup();
+  // const logGoogleUser = async () => {
+  //   await signInWithGooglePopup();
+  // };
+
+  const signInWithGoogle = async () => {
+    dispatch(googleSignInStart());
   };
 
   return (
@@ -79,7 +89,7 @@ const SignInForm = () => {
           <Button
             buttonType={BUTTON_TYPE_CLASSES.google}
             type="button"
-            onClick={logGoogleUser}
+            onClick={signInWithGoogle}
           >
             Google Sign In
           </Button>
